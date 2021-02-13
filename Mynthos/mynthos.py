@@ -6,6 +6,7 @@
 import pygame
 import random
 import terrain
+from noise import pnoise2
 
 #--- Init ---#
 pygame.init()
@@ -29,11 +30,6 @@ ocean_alt = (76, 166, 255)
 # Game Objects
 tile_size = 6
 ttile_list = [['X' for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # 2D array that holds terrain
-
-#land_origin = (random.randint(0,(display_width/4))) * 2    ------------- OUTDATED
-#land_height = (random.randint(land_origin,(display_height/2))) * 2
-#land_width = (random.randint(land_origin,(display_height/2))) * 2 # FIX! - land tiles exceed even numbers
-#land_clrlist = []
 
 def draw_back():
     window.fill(bgc)
