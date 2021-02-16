@@ -28,7 +28,7 @@ ocean = (52, 152, 255)
 ocean_alt = (76, 166, 255)
 
 # Game Objects
-tile_size = 6
+tile_size = 24
 ttile_list = [['X' for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # 2D array that holds terrain
 
 def draw_back():
@@ -49,8 +49,12 @@ def draw_terrain():
 
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
         for x in range(0, display_width, tile_size): # create a rect size tile_size until horizontal end of display
-            #rtype = random.choice(["ocean","barren"]) # cycle terrain type
-            rcolor = random.choice([ocean,barren]) # TEMP
+
+            if ((ttile_list[int(y/tile_size)][int(x/tile_size)]) == "O"): # TEMP if statement for color selection
+                rcolor = ocean
+            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) == "L"):
+                rcolor = barren
+
             pygame.draw.rect(window, rcolor, (x, y, tile_size, tile_size))
 
 
@@ -60,7 +64,7 @@ run = True
 while run:
     pygame.time.delay(200)
 
-    while (pygame.time.get_ticks()) < 2000: # Draw once TEMP
+    while (pygame.time.get_ticks()) < 1000: # Draw once TEMP
 
         draw_back()
         draw_grid()
