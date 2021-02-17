@@ -5,8 +5,8 @@
 #--- Imports ---#
 import pygame
 import random
+import noise
 import terrain
-from noise import pnoise2
 
 #--- Init ---#
 pygame.init()
@@ -28,7 +28,8 @@ ocean = (52, 152, 255)
 ocean_alt = (76, 166, 255)
 
 # Game Objects
-tile_size = 24
+tile_size = 2
+perlinbase = (random.randint(1,50))
 ttile_list = [['X' for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # 2D array that holds terrain
 
 def draw_back():
@@ -45,15 +46,26 @@ def draw_terrain():
 
     for j in range (0, int(display_height/tile_size)): # populate ttile_list
         for i in range(0, int(display_height/tile_size)):
-            ttile_list[i][j] = random.choice(["O","L"])
+            ttile_list[i][j] = noise.pnoise2(i/100.0, # 2d perlin noise from native noise module
+                                    j/100.0,
+                                    octaves=6,
+                                    persistence=0.5,
+                                    lacunarity=2.0,
+                                    repeatx=display_width,
+                                    repeaty=display_height,
+                                    base=perlinbase)
 
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
         for x in range(0, display_width, tile_size): # create a rect size tile_size until horizontal end of display
 
-            if ((ttile_list[int(y/tile_size)][int(x/tile_size)]) == "O"): # TEMP if statement for color selection
+            if ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < -0.05): # TEMP if statement for color selection
                 rcolor = ocean
-            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) == "L"):
+            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < 0):
                 rcolor = barren
+            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < 1.0):
+                rcolor = verdant
+            else:
+                rcolor = bgc
 
             pygame.draw.rect(window, rcolor, (x, y, tile_size, tile_size))
 
@@ -62,7 +74,7 @@ def draw_terrain():
 
 run = True
 while run:
-    pygame.time.delay(200)
+    pygame.time.delay(100)
 
     while (pygame.time.get_ticks()) < 1000: # Draw once TEMP
 
