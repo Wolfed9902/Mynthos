@@ -29,8 +29,14 @@ ocean_alt = (76, 166, 255)
 
 # Game Objects
 tile_size = 2
-perlinbase = (random.randint(1,50))
-ttile_list = [['X' for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # 2D array that holds terrain
+ttile_list = [[0 for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # 2D array that holds terrain
+
+# Terrain Var
+noise_oct = 6
+noise_pers = 0.5
+noise_lac = 2
+perlin_base = (random.randint(1,100))
+
 
 def draw_back():
     window.fill(bgc)
@@ -48,12 +54,12 @@ def draw_terrain():
         for i in range(0, int(display_height/tile_size)):
             ttile_list[i][j] = noise.pnoise2(i/100.0, # 2d perlin noise from native noise module
                                     j/100.0,
-                                    octaves=6,
-                                    persistence=0.5,
-                                    lacunarity=2.0,
-                                    repeatx=display_width,
-                                    repeaty=display_height,
-                                    base=perlinbase)
+                                    octaves = noise_oct,
+                                    persistence = noise_pers,
+                                    lacunarity= noise_lac,
+                                    repeatx = display_width,
+                                    repeaty = display_height,
+                                    base = perlin_base)
 
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
         for x in range(0, display_width, tile_size): # create a rect size tile_size until horizontal end of display
