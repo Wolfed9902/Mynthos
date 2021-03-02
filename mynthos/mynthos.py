@@ -91,9 +91,17 @@ while run:
         print(ttile_list)
 
     for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+
+                perlin_base = (random.randint(1,100)) # Init new base seed
+                draw_back()
+                draw_grid()
+                draw_terrain()
+
         if event.type == pygame.QUIT:
             run = False
 
-    pygame.display.update()
+    pygame.display.flip()
 
 pygame.quit()
