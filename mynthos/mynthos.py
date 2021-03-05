@@ -26,6 +26,7 @@ barren = (210, 162, 120)
 verdant = (0, 178, 60)
 ocean = (52, 152, 255)
 ocean_alt = (76, 166, 255)
+mountain = (168, 158, 148)
 
 # Game Objects
 tile_size = 2
@@ -68,8 +69,10 @@ def draw_terrain():
                 rcolor = ocean
             elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < 0):
                 rcolor = barren
-            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < 1.0):
+            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < 0.2):
                 rcolor = verdant
+            elif ((ttile_list[int(y/tile_size)][int(x/tile_size)]) < 1.0):
+                rcolor = mountain
             else:
                 rcolor = bgc
 
