@@ -49,18 +49,20 @@ def draw_grid():
     for y in range(0, display_height, tile_size):
         pygame.draw.line(window, ln, (0, y), (display_width, y))
 
-def draw_terrain():
+def generate_terrain():
 
-    for j in range (0, int(display_height/tile_size)): # populate ttile_list
-        for i in range(0, int(display_height/tile_size)):
-            ttile_list[i][j] = noise.pnoise2(i/100.0, # 2d perlin noise from native noise module
-                                    j/100.0,
-                                    octaves = noise_oct,
-                                    persistence = noise_pers,
-                                    lacunarity= noise_lac,
-                                    repeatx = display_width,
-                                    repeaty = display_height,
-                                    base = perlin_base)
+        for j in range (0, int(display_height/tile_size)): # populate ttile_list
+            for i in range(0, int(display_height/tile_size)):
+                ttile_list[i][j] = noise.pnoise2(i/100.0, # 2d perlin noise from native noise module
+                                        j/100.0,
+                                        octaves = noise_oct,
+                                        persistence = noise_pers,
+                                        lacunarity= noise_lac,
+                                        repeatx = display_width,
+                                        repeaty = display_height,
+                                        base = perlin_base)
+
+def draw_terrain():
 
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
         for x in range(0, display_width, tile_size): # create a rect size tile_size until horizontal end of display
@@ -89,6 +91,7 @@ while run:
 
         draw_back()
         draw_grid()
+        generate_terrain()
         draw_terrain()
 
         print(ttile_list)
