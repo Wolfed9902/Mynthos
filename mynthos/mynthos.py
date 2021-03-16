@@ -63,6 +63,21 @@ def generate_terrain():
                                         repeaty = display_height,
                                         base = perlin_base)
 
+        for y in range (0, int(display_height/tile_size)): # populate ttile_list types based off of tgen_list
+            for x in range(0, int(display_height/tile_size)):
+
+                if ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < -0.05):
+                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'ocean'
+                elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 0):
+                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'barren'
+                elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 0.2):
+                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'verdant'
+                elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 1.0):
+                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'mountain'
+                else:
+                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'background'
+
+
 def draw_terrain():
 
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
