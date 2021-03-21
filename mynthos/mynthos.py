@@ -20,13 +20,16 @@ pygame.display.set_caption("Mynthos")
 #--- Variables ---#
 
 # Colors
+color_dict = { 'bgc' : {'color': (32,32,32)},
+                'barren' : {'color': (210, 162, 120)},
+                'verdant' : {'color': (0, 178, 60)},
+                'ocean' : {'color': (52, 152, 255)},
+                'ocean_alt' : {'color': (76, 166, 255)},
+                'mountain' : {'color': (168, 158, 148)}
+                }
+
 bgc = (32,32,32)
 ln = (38,38,38)
-barren = (210, 162, 120)
-verdant = (0, 178, 60)
-ocean = (52, 152, 255)
-ocean_alt = (76, 166, 255)
-mountain = (168, 158, 148)
 
 # Game Objects
 tile_size = 2
@@ -53,7 +56,7 @@ def draw_grid():
 def generate_terrain():
 
         for j in range (0, int(display_height/tile_size)): # populate tgen_list
-            for i in range(0, int(display_height/tile_size)):
+            for i in range(0, int(display_width/tile_size)):
                 tgen_list[i][j] = noise.pnoise2(i/100.0, # 2d perlin noise from native noise module
                                         j/100.0,
                                         octaves = noise_oct,
@@ -64,18 +67,18 @@ def generate_terrain():
                                         base = perlin_base)
 
         for y in range (0, int(display_height/tile_size)): # populate ttile_list types based off of tgen_list
-            for x in range(0, int(display_height/tile_size)):
+            for x in range(0, int(display_width/tile_size)):
 
-                if ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < -0.05):
-                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'ocean'
-                elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 0):
-                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'barren'
-                elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 0.2):
-                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'verdant'
-                elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 1.0):
-                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'mountain'
+                if ((tgen_list[y][x]) < -0.05):
+                    (ttile_list[y][x]).type = 'ocean'
+                elif ((tgen_list[y][x]) < 0):
+                    (ttile_list[y][x]).type = 'barren'
+                elif ((tgen_list[y][x]) < 0.2):
+                    (ttile_list[y][x]).type = 'verdant'
+                elif ((tgen_list[y][x]) < 1.0):
+                    (ttile_list[y][x]).type = 'mountain'
                 else:
-                    (ttile_list[int(y/tile_size)][int(x/tile_size)]).type = 'background'
+                    (ttile_list[y][x]).type = 'bgc'
 
 
 def draw_terrain():
@@ -83,18 +86,9 @@ def draw_terrain():
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
         for x in range(0, display_width, tile_size): # create a rect size tile_size until horizontal end of display
 
-            if ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < -0.05): # TEMP if statement for color selection
-                rcolor = ocean
-            elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 0):
-                rcolor = barren
-            elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 0.2):
-                rcolor = verdant
-            elif ((tgen_list[int(y/tile_size)][int(x/tile_size)]) < 1.0):
-                rcolor = mountain
-            else:
-                rcolor = bgc
+            rcolor = ((ttile_list[int(y/tile_size)][int(x/tile_size)]).type)
 
-            pygame.draw.rect(window, rcolor, (x, y, tile_size, tile_size))
+            pygame.draw.rect(window, (color_dict[rcolor]["color"]), (x, y, tile_size, tile_size)) # draw in color matching terrain type
 
 
 #--- Runtime ---#
@@ -110,7 +104,7 @@ while run:
         generate_terrain()
         draw_terrain()
 
-        print(tgen_list)
+        print(tgen_list) # Debug TEMP
 
     for event in pygame.event.get():
 
