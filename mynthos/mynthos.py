@@ -71,12 +71,14 @@ def generate_terrain():
 
                 if ((tgen_list[y][x]) < -0.05):
                     (ttile_list[y][x]).type = 'ocean'
+                    (ttile_list[y][x]).passable = False
                 elif ((tgen_list[y][x]) < 0):
                     (ttile_list[y][x]).type = 'barren'
                 elif ((tgen_list[y][x]) < 0.2):
                     (ttile_list[y][x]).type = 'verdant'
                 elif ((tgen_list[y][x]) < 1.0):
                     (ttile_list[y][x]).type = 'mountain'
+                    (ttile_list[y][x]).passable = False
                 else:
                     (ttile_list[y][x]).type = 'bgc'
 
@@ -97,7 +99,7 @@ run = True
 while run:
     pygame.time.delay(100)
 
-    while (pygame.time.get_ticks()) < 1000: # Draw once TEMP
+    while (pygame.time.get_ticks()) < 1060: # Draw once TEMP
 
         draw_back()
         draw_grid()
@@ -113,8 +115,10 @@ while run:
                 perlin_base = (random.randint(1,100)) # Init new base seed
                 draw_back()
                 draw_grid()
+                generate_terrain()
                 draw_terrain()
-
+                print(tgen_list) # Debug TEMP
+                
         if event.type == pygame.QUIT:
             run = False
 
