@@ -25,7 +25,8 @@ color_dict = { 'bgc' : {'color': (32,32,32)},
                 'verdant' : {'color': (0, 178, 60)},
                 'ocean' : {'color': (52, 152, 255)},
                 'ocean_alt' : {'color': (76, 166, 255)},
-                'mountain' : {'color': (168, 158, 148)}
+                'mountain' : {'color': (168, 158, 148)},
+                'peak' : {'color': (215, 215, 215)}
                 }
 
 bgc = (32,32,32)
@@ -76,8 +77,10 @@ def generate_terrain():
                     (ttile_list[y][x]).type = 'barren'
                 elif ((tgen_list[y][x]) < 0.2):
                     (ttile_list[y][x]).type = 'verdant'
-                elif ((tgen_list[y][x]) < 1.0):
+                elif ((tgen_list[y][x]) < 0.35):
                     (ttile_list[y][x]).type = 'mountain'
+                elif ((tgen_list[y][x]) < 1.0):
+                    (ttile_list[y][x]).type = 'peak'
                     (ttile_list[y][x]).passable = False
                 else:
                     (ttile_list[y][x]).type = 'bgc'
@@ -118,7 +121,7 @@ while run:
                 generate_terrain()
                 draw_terrain()
                 print(tgen_list) # Debug TEMP
-                
+
         if event.type == pygame.QUIT:
             run = False
 
