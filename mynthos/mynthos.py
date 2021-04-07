@@ -33,9 +33,11 @@ bgc = (32,32,32)
 ln = (38,38,38)
 
 # Game Objects
-tile_size = 2
+tile_size = 4
 tgen_list = [[0 for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # list that holds perlin grid
 ttile_list = [[TerrainTile('barren') for y in range(0, int(display_height/tile_size))] for x in range(0, int(display_width/tile_size))] # list that holds terrain
+sel_tile_x = 0
+sel_tile_y = 0
 
 # Terrain Generation Variables
 noise_oct = 6
@@ -91,7 +93,10 @@ def draw_terrain():
     for y in range (0, display_height, tile_size): # horizontal fill until vertical end of display
         for x in range(0, display_width, tile_size): # create a rect size tile_size until horizontal end of display
 
-            rcolor = ((ttile_list[int(y/tile_size)][int(x/tile_size)]).type)
+            if ( (((ttile_list[int(y/tile_size)][int(x/tile_size)]).selected)) == False ):
+                rcolor = ((ttile_list[int(y/tile_size)][int(x/tile_size)]).type)
+            else:
+                rcolor = 'bgc'
 
             pygame.draw.rect(window, (color_dict[rcolor]["color"]), (x, y, tile_size, tile_size)) # draw in color matching terrain type
 
@@ -104,6 +109,8 @@ while run:
 
     while (pygame.time.get_ticks()) < 1060: # Draw once TEMP
 
+        (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
+
         draw_back()
         draw_grid()
         generate_terrain()
@@ -113,14 +120,38 @@ while run:
 
     for event in pygame.event.get():
 
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        if event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_SPACE:
 
                 perlin_base = (random.randint(1,100)) # Init new base seed
                 draw_back()
                 draw_grid()
                 generate_terrain()
-                draw_terrain()
                 print(tgen_list) # Debug TEMP
+
+            if event.key == pygame.K_UP: # Selected tile according to key input (TODO: streamline this!)
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
+                if ((sel_tile_y >= 0)): # TODO or reached max tile y
+                    sel_tile_y -= 1
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
+            if event.key == pygame.K_DOWN:
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
+                if sel_tile_y >= 0:
+                    sel_tile_y += 1
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
+            if event.key == pygame.K_LEFT:
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
+                if sel_tile_x >= 0:
+                    sel_tile_x -= 1
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
+            if event.key == pygame.K_RIGHT:
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
+                if sel_tile_x >= 0:
+                    sel_tile_x += 1
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
+
+            draw_terrain()
 
         if event.type == pygame.QUIT:
             run = False
