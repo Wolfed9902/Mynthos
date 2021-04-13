@@ -132,22 +132,22 @@ while run:
 
             if event.key == pygame.K_UP: # Selected tile according to key input (TODO: streamline this!)
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
-                if ((sel_tile_y >= 0)): # TODO or reached max tile y
+                if (sel_tile_y > 0):
                     sel_tile_y -= 1
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
             if event.key == pygame.K_DOWN:
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
-                if sel_tile_y >= 0:
+                if (sel_tile_y < (len(ttile_list) - 1)):
                     sel_tile_y += 1
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
             if event.key == pygame.K_LEFT:
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
-                if sel_tile_x >= 0:
+                if (sel_tile_x > 0):
                     sel_tile_x -= 1
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
             if event.key == pygame.K_RIGHT:
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
-                if sel_tile_x >= 0:
+                if (sel_tile_x < (len(ttile_list) - 1)):
                     sel_tile_x += 1
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = True
 
