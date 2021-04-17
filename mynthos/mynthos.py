@@ -51,6 +51,7 @@ def draw_back():
 
 def draw_grid():
 
+    # create a grid within display
     for x in range(0, display_width, tile_size):
         pygame.draw.line(window, ln, (x, 0), (x, display_height))
     for y in range(0, display_height, tile_size):
@@ -116,8 +117,6 @@ while run:
         generate_terrain()
         draw_terrain()
 
-        print(tgen_list) # Debug TEMP
-
     for event in pygame.event.get():
 
         if event.type == pygame.KEYDOWN:
@@ -128,7 +127,12 @@ while run:
                 draw_back()
                 draw_grid()
                 generate_terrain()
-                print(tgen_list) # Debug TEMP
+
+            if event.key == pygame.K_i: # Display tile info
+
+                print("Terrain Type: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).type)
+                print("Passable: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).passable)
+                print("Temperature: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).temperature)
 
             if event.key == pygame.K_UP: # Selected tile according to key input (TODO: streamline this!)
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
