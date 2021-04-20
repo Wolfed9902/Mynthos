@@ -78,10 +78,13 @@ def generate_terrain():
                     (ttile_list[y][x]).passable = False
                 elif ((tgen_list[y][x]) < 0):
                     (ttile_list[y][x]).type = 'barren'
+                    (ttile_list[y][x]).passable = True
                 elif ((tgen_list[y][x]) < 0.2):
                     (ttile_list[y][x]).type = 'verdant'
+                    (ttile_list[y][x]).passable = True
                 elif ((tgen_list[y][x]) < 0.35):
                     (ttile_list[y][x]).type = 'mountain'
+                    (ttile_list[y][x]).passable = True
                 elif ((tgen_list[y][x]) < 1.0):
                     (ttile_list[y][x]).type = 'peak'
                     (ttile_list[y][x]).passable = False
