@@ -133,9 +133,11 @@ while run:
 
             if event.key == pygame.K_i: # Display tile info
 
+                print("Tile (", sel_tile_x, "," , sel_tile_y, ")")
                 print("Terrain Type: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).type)
                 print("Passable: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).passable)
                 print("Temperature: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).temperature)
+                print(" ")
 
             if event.key == pygame.K_UP: # Selected tile according to key input (TODO: streamline this!)
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
