@@ -76,18 +76,23 @@ def generate_terrain():
                 if ((tgen_list[y][x]) < -0.05):
                     (ttile_list[y][x]).type = 'ocean'
                     (ttile_list[y][x]).passable = False
+                    (ttile_list[y][x]).temperature = 60 # TEMP: Set temperature for tile dependent on type
                 elif ((tgen_list[y][x]) < 0):
                     (ttile_list[y][x]).type = 'barren'
                     (ttile_list[y][x]).passable = True
+                    (ttile_list[y][x]).temperature = 80
                 elif ((tgen_list[y][x]) < 0.2):
                     (ttile_list[y][x]).type = 'verdant'
                     (ttile_list[y][x]).passable = True
+                    (ttile_list[y][x]).temperature = 70
                 elif ((tgen_list[y][x]) < 0.35):
                     (ttile_list[y][x]).type = 'mountain'
                     (ttile_list[y][x]).passable = True
+                    (ttile_list[y][x]).temperature = 50
                 elif ((tgen_list[y][x]) < 1.0):
                     (ttile_list[y][x]).type = 'peak'
                     (ttile_list[y][x]).passable = False
+                    (ttile_list[y][x]).temperature = 30
                 else:
                     (ttile_list[y][x]).type = 'bgc'
 
