@@ -144,6 +144,9 @@ while run:
                 print("Temperature: ", (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).temperature)
                 print(" ")
 
+            if event.key == pygame.K_b: # Set tile to barren
+                (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).type = 'barren'
+
             if event.key == pygame.K_UP: # Selected tile according to key input (TODO: streamline this!)
                 (ttile_list[int(sel_tile_y)][int(sel_tile_x)]).selected = False
                 if (sel_tile_y > 0):
